@@ -95,6 +95,11 @@ environments {
     }
 }
 
+// Added by the Spring Security Core plugin:
+grails.plugin.springsecurity.userLookup.userDomainClassName = 'pruebausuarios.SecUser'
+grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'pruebausuarios.SecUserSecRole'
+grails.plugin.springsecurity.authority.className = 'pruebausuarios.SecRole'
+
 // log4j configuration
 log4j.main = {
     // Example of changing the log pattern for the default console appender:
@@ -118,9 +123,6 @@ log4j.main = {
 
 
 // Added by the Spring Security Core plugin:
-grails.plugin.springsecurity.userLookup.userDomainClassName = 'pruebausuarios.SecUser'
-grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'pruebausuarios.SecUserSecRole'
-grails.plugin.springsecurity.authority.className = 'pruebausuarios.SecRole'
 grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	'/':                ['permitAll'],
 	'/index':           ['permitAll'],
@@ -131,4 +133,3 @@ grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 	'/**/images/**':    ['permitAll'],
 	'/**/favicon.ico':  ['permitAll']
 ]
-

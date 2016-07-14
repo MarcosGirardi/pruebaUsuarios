@@ -4,26 +4,31 @@ package pruebausuarios
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
+import grails.plugin.springsecurity.annotation.Secured
 
 @Transactional(readOnly = true)
 class UsuarioController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
+    @Secured(['IS_AUTHENTICATED_ANONYMOUSLY'])
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond Usuario.list(params), model:[usuarioInstanceCount: Usuario.count()]
     }
 
+    @Secured(['ROLE_ADMIN', 'IS_AUTHENTICATED_FULLY'])
     def show(Usuario usuarioInstance) {
         respond usuarioInstance
     }
 
+    @Secured(['ROLE_ADMIN', 'IS_AUTHENTICATED_FULLY'])
     def create() {
         respond new Usuario(params)
     }
 
     @Transactional
+    @Secured(['ROLE_ADMIN', 'IS_AUTHENTICATED_FULLY'])
     def save(Usuario usuarioInstance) {
         if (usuarioInstance == null) {
             notFound()
@@ -46,11 +51,13 @@ class UsuarioController {
         }
     }
 
+    @Secured(['ROLE_ADMIN', 'IS_AUTHENTICATED_FULLY'])
     def edit(Usuario usuarioInstance) {
         respond usuarioInstance
     }
 
     @Transactional
+    @Secured(['ROLE_ADMIN', 'IS_AUTHENTICATED_FULLY'])
     def update(Usuario usuarioInstance) {
         if (usuarioInstance == null) {
             notFound()
@@ -74,6 +81,7 @@ class UsuarioController {
     }
 
     @Transactional
+    @Secured(['ROLE_ADMIN', 'IS_AUTHENTICATED_FULLY'])
     def delete(Usuario usuarioInstance) {
 
         if (usuarioInstance == null) {
