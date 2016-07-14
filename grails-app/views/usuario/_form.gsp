@@ -29,12 +29,21 @@
 
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: usuarioInstance, field: 'fecha', 'error')} ">
+<div class="fieldcontain ${hasErrors(bean: usuarioInstance, field: 'fecha', 'error')} required">
 	<label for="fecha">
 		<g:message code="usuario.fecha.label" default="Fecha" />
-		
+		<span class="required-indicator">*</span>
 	</label>
-	<g:datePicker name="fecha" precision="day"  value="${usuarioInstance?.fecha}" default="none" noSelection="['': '']" />
+	<g:datePicker name="fecha" precision="day"  value="${usuarioInstance?.fecha}"  />
+
+</div>
+
+<div class="fieldcontain ${hasErrors(bean: usuarioInstance, field: 'role', 'error')} required">
+	<label for="role">
+		<g:message code="usuario.role.label" default="Role" />
+		<span class="required-indicator">*</span>
+	</label>
+	<g:select name="role" from="${usuarioInstance.constraints.role.inList}" required="" value="${usuarioInstance?.role}" valueMessagePrefix="usuario.role"/>
 
 </div>
 

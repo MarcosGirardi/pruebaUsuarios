@@ -32,6 +32,8 @@
 					
 						<g:sortableColumn property="fecha" title="${message(code: 'usuario.fecha.label', default: 'Fecha')}" />
 					
+						<g:sortableColumn property="role" title="${message(code: 'usuario.role.label', default: 'Role')}" />
+					
 					</tr>
 				</thead>
 				<tbody>
@@ -45,6 +47,8 @@
 						<td>${fieldValue(bean: usuarioInstance, field: "nombre")}</td>
 					
 						<td><g:formatDate date="${usuarioInstance.fecha}" /></td>
+					
+						<td>${fieldValue(bean: usuarioInstance, field: "role")}</td>
 					
 					</tr>
 				</g:each>

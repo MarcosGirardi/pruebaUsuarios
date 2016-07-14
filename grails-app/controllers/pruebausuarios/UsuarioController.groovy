@@ -9,10 +9,21 @@ import grails.plugin.springsecurity.annotation.Secured
 @Transactional(readOnly = true)
 class UsuarioController {
 
+    def springSecurityService
+
+
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     @Secured(['IS_AUTHENTICATED_ANONYMOUSLY'])
     def index(Integer max) {
+      def asd = springSecurityService.getCurrentUserId()
+      log.println(springSecurityService.getCurrentUserId())
+
+      if (asd){
+        def usuario = springSecurityService.getCurrentUser()
+        log.println("${usuario.nombre}")
+      }
+
         params.max = Math.min(max ?: 10, 100)
         respond Usuario.list(params), model:[usuarioInstanceCount: Usuario.count()]
     }
@@ -41,6 +52,11 @@ class UsuarioController {
         }
 
         usuarioInstance.save flush:true
+
+        def role = SecRole.findByAuthority(usuarioInstance.role)
+        if (!usuarioInstance.authorities.contains(role)) {
+          SecUserSecRole.create usuarioInstance, role
+        }
 
         request.withFormat {
             form multipartForm {
